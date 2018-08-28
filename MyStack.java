@@ -1,4 +1,6 @@
-
+/***
+ * Stack implementation using array.
+ **/
 public class MyStack {
 	   private int maxSize;
 	   private long[] stackArray;
@@ -24,6 +26,7 @@ public class MyStack {
 	   public boolean isFull() {
 	      return (top == maxSize - 1);
 	   }
+	   
 	   public static void main(String[] args) {
 	      MyStack theStack = new MyStack(10); 
 	      theStack.push(10);
