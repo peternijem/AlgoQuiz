@@ -12,15 +12,25 @@ public class MaxOverlapIntervalCount {
 	private static final String START_POINT = "START_POINT";
 	private static final String END_POINT = "END_POINT";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IllegalArgumentException {
 		int [] s = {0, 1, 3, 4, 7};
 		int [] e = {2, 5, 6, 7, 8};
 		Map<String, Integer> resMap = maxOverlapIntervalCount(s, e);
 		System.out.println("Max Overlapping Interval: " +resMap.get(MAX_OVERLAP_INTERVAL)+
 				". Occuring at point: (" + resMap.get(START_POINT)+","+resMap.get(END_POINT)+")");
+		
+		int [] s2 = {0, 3, 4, 7, 1};
+		int [] e2 = {2, 7, 6, 8, 5};
+		resMap = maxOverlapIntervalCount_2(s2, e2);
+		System.out.println("Max Overlapping Interval: " +resMap.get(MAX_OVERLAP_INTERVAL)+
+				". Occuring at point: (" + resMap.get(START_POINT)+","+resMap.get(END_POINT)+")");
 	}
 	
-	public static Map<String, Integer> maxOverlapIntervalCount(int[] start, int[] end){
+	public static Map<String, Integer> maxOverlapIntervalCount(int[] start, int[] end) throws IllegalArgumentException{
+		
+		if(start.length != end.length) {
+			throw new IllegalArgumentException();
+		}
 		int maxOverlap = 0;
 		int currentOverlap = 0;
 		
@@ -48,6 +58,40 @@ public class MaxOverlapIntervalCount {
 		}
 		
 		return buildResult(maxOverlap, startPoint, endPoint);
+	}
+	
+	public static Map<String, Integer> maxOverlapIntervalCount_2(int[] start, int[] end) throws IllegalArgumentException{
+		
+		if(start.length != end.length) {
+			throw new IllegalArgumentException();
+		}
+	
+		int[] tmpEnd = Arrays.copyOf(end, end.length);
+		Arrays.sort(tmpEnd); 
+		//the size of the int array would be the max end point + 1
+		int size = tmpEnd[tmpEnd.length - 1] + 1;
+		int[] intArr = new int[size];
+		
+		int maxOverlap = 0;
+		int startPoint = 0; int endPoint = 0;
+		
+		
+		for(int i=0;i < start.length; i++) {
+			int currStart = start[i];
+			int currEnd = end[i];
+			for(int j = currStart; j<=currEnd; j++) {
+				intArr[j] += 1;
+				if(intArr[j] > maxOverlap) {
+					startPoint = j;
+					endPoint = currEnd;
+					maxOverlap = intArr[j]; 
+				}
+			}
+		}
+		
+		
+		return buildResult(maxOverlap, startPoint, endPoint);
+		
 	}
 
 	private static Map<String, Integer> buildResult(int maxOverlap, int startPoint, int endPoint) {
