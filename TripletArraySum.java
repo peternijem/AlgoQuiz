@@ -12,7 +12,7 @@ public class TripletArraySum {
 		/* Sort the elements */
 		Arrays.sort(A);
 
-		/* Now look for the two candidates 
+		/* Now look for the three candidates 
 		     in the sorted array*/
 		int l = 0;
 		int r = arr_size-1;
