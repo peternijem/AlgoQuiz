@@ -1,140 +1,113 @@
 
 public class FindTheWordInMatrix{
-	static int row=8,col=7;
-	static String word="hello";
-	static char matrix[][]=
-		{{'c','h','e','l','l','o','z'},
-				{'o','e','e','e','o','e','h'},
-				{'i','l','o','l','l','o','o'},
-				{'n','l','a','c','l','d','l'},
-				{'d','o','l','l','e','o','l'},
-				{'i','n','e','l','h','m','e'},
-				{'a','h','i','i','e','y','h'},
-				{'h','k','i','l','l','h','r'}};
-	private static void searchMatrix(int i, int j) {
-		int r=i,c=j,currIndex=0;
-		String output = "";
-		//Left
-		r=i;c=j;currIndex=0;output = "";
-		if((c+1)>=word.length()){
-			for(int a=0;a<word.length();a++){
-				if(matrix[r][c]==word.charAt(currIndex)){
-					output+="("+r+","+c+")"+matrix[r][c]+" ";
-					c--;currIndex++;
-				}else{
-					output = null;
-					break;
-				}
+	public int[][] solution;
+	int path = 1;
+
+	// initialize the solution matrix in constructor.
+	public FindTheWordInMatrix(int N) {
+		solution = new int[N][N];
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				solution[i][j] = 0;
 			}
-			if(output != null)System.out.println(output);
-		}
-		//Right
-		r=i;c=j;currIndex=0;output="";
-		if((col-c)>=word.length()){
-			for(int a=0;a<word.length();a++){
-				if(matrix[r][c]==word.charAt(currIndex)){
-					output+="("+r+","+c+")"+matrix[r][c]+" ";
-					c++;currIndex++;
-				}else{
-					output=null;
-					break;
-				}
-			}
-			if(output != null)System.out.println(output);
-		}
-		//Down
-		r=i;c=j;currIndex=0;output="";
-		if((row-(r+1))>=word.length()){
-			for(int a=0;a<word.length();a++){
-				if(matrix[r][c]==word.charAt(currIndex)){
-					output+="("+r+","+c+")"+matrix[r][c]+" ";
-					r++;currIndex++;
-				}else{
-					output=null;
-					break;
-				}
-			}
-			if(output != null)System.out.println(output);
-		}
-		//Up
-		r=i;c=j;currIndex=0;output="";
-		if((r+1)>=word.length()){
-			for(int a=0;a<word.length();a++){
-				if(matrix[r][c]==word.charAt(currIndex)){
-					output+="("+r+","+c+")"+matrix[r][c]+" ";
-					r--;currIndex++;
-				}else{
-					output=null;
-					break;
-				}
-			}
-			if(output != null)System.out.println(output);
-		}
-		//LeftUp
-		r=i;c=j;currIndex=0;output="";
-		if((c+1)>=word.length()&&(r+1)>=word.length()){
-			for(int a=0;a<word.length();a++){
-				if(matrix[r][c]==word.charAt(currIndex)){
-					output+="("+r+","+c+")"+matrix[r][c]+" ";
-					r--;c--;currIndex++;
-				}else{
-					output=null;
-					break;
-				}
-			}
-			if(output != null)System.out.println(output);
-		}
-		//LeftDown
-		r=i;c=j;currIndex=0;output="";
-		if((c+1)>=word.length()&&(row-(r+1))>=word.length()){
-			for(int a=0;a<word.length();a++){
-				if(matrix[r][c]==word.charAt(currIndex)){
-					output+="("+r+","+c+")"+matrix[r][c]+" ";
-					r++;c--;currIndex++;
-				}else{
-					output=null;
-					break;
-				}
-			}
-			if(output != null)System.out.println(output);
-		}
-		//RightUP
-		r=i;c=j;currIndex=0;output="";
-		if((col-c)>=word.length()&&(r+1)>=word.length()){
-			for(int a=0;a<word.length();a++){
-				if(matrix[r][c]==word.charAt(currIndex)){
-					output+="("+r+","+c+")"+matrix[r][c]+" ";
-					r--;c++;currIndex++;
-				}else{
-					output=null;
-					break;
-				}
-			}
-			if(output != null)System.out.println(output);
-		}
-		//RightDown
-		r=i;c=j;currIndex=0;output="";
-		if((col-c)>=word.length()&&(row-(r+1))>=word.length()){
-			for(int a=0;a<word.length();a++){
-				if(matrix[r][c]==word.charAt(currIndex)){
-					output+="("+r+","+c+")"+matrix[r][c]+" ";
-					r++;c++;currIndex++;
-				}else{
-					output=null;
-					break;
-				}
-			}
-			if(output != null)System.out.println(output);
 		}
 	}
-	public static void main(String args[]){		
-		char start=word.charAt(0);
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 7; j++) {
-				if(start==matrix[i][j]){
-					searchMatrix(i,j);
+
+	public boolean searchWord(char[][] matrix, String word) {
+		int N = matrix.length;
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				if (search(matrix, word, i, j, 0, N)) {
+					return true;
 				}
 			}
 		}
+		return false;
+	}
+
+	public boolean search(char[][] matrix, String word, int row, int col,
+			int index, int N) {
+
+		// check if current cell not already used or character in it is not not
+
+		if (solution[row][col] != 0 || word.charAt(index) != matrix[row][col]) {
+			return false;
+		}
+
+		if (index == word.length() - 1) {
+			// word is found, return true
+			solution[row][col] = path++;
+			return true;
+		}
+
+		// mark the current cell as 1
+		solution[row][col] = path++;		
+		// check if cell is already used
+
+		if (row + 1 < N && search(matrix, word, row + 1, col, index + 1, N)) { // go
+																				// down
+			return true;
+		}
+		if (row - 1 >= 0 && search(matrix, word, row - 1, col, index + 1, N)) { // go
+																				// up
+			return true;
+		}
+		if (col + 1 < N && search(matrix, word, row, col + 1, index + 1, N)) { // go
+																				// right
+			return true;
+		}
+		if (col - 1 >= 0 && search(matrix, word, row, col - 1, index + 1, N)) { // go
+																				// left
+			return true;
+		}
+		if (row - 1 >= 0 && col + 1 < N
+				&& search(matrix, word, row - 1, col + 1, index + 1, N)) {
+			// go diagonally up right
+			return true;
+		}
+		if (row - 1 >= 0 && col - 1 >= 0
+				&& search(matrix, word, row - 1, col - 1, index + 1, N)) {
+			// go diagonally up left
+			return true;
+		}
+		if (row + 1 < N && col - 1 >= 0
+				&& search(matrix, word, row + 1, col - 1, index + 1, N)) {
+			// go diagonally down left
+			return true;
+		}
+		if (row + 1 < N && col + 1 < N
+				&& search(matrix, word, row + 1, col + 1, index + 1, N)) {
+			// go diagonally down right
+			return true;
+		}
+
+		// if none of the option works out, BACKTRACK and return false
+		solution[row][col] = 0;
+		path--;
+		return false;
+	}
+
+	public void print() {
+		for (int i = 0; i < solution.length; i++) {
+			for (int j = 0; j < solution.length; j++) {
+				System.out.print(" " + solution[i][j]);
+			}
+			System.out.println();
+		}
+	}
+
+	public static void main(String[] args) {
+		char[][] matrix = { { 't', 'z', 'x', 'c', 'd' },
+							{ 'a', 'h', 'n', 'z', 'x' }, 
+							{ 'h', 'w', 'o', 'i', 'o' },
+							{ 'o', 'r', 'n', 'r', 'n' }, 
+							{ 'a', 'b', 'r', 'i', 'n' } };
+		FindTheWordInMatrix w = new FindTheWordInMatrix(matrix.length);
+		if (w.searchWord(matrix, "horizon")) {
+			w.print();
+		} else {
+			System.out.println("NO PATH FOUND");
+		}
+
 	}
 }
