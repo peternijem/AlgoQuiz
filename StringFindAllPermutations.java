@@ -1,4 +1,5 @@
 
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,8 +22,8 @@ public class StringFindAllPermutations {
 		Set<String> words = permutationFinder(rem);
 		for (String strNew : words) { 
 			for (int i = 0;i <= strNew.length();i++){
-				String begin = str.substring(0, i);
-				String end = str.substring(i);
+				String begin = strNew.substring(0, i);
+				String end = strNew.substring(i);
 				perm.add(begin + initial + end);
 			}
 		}
@@ -32,11 +33,11 @@ public class StringFindAllPermutations {
 
 	public static void main(String[] args) {
 		// String s = "AAC";
-		String s1 = "ABC";
-		//   String s2 = "ABCD";
-		// System.out.println("\nPermutations for " + s + " are: \n" + permutationFinder(s));
-		System.out.println("\nPermutations for " + s1 + " are: \n" + permutationFinder(s1));
-		//System.out.println("\nPermutations for " + s2 + " are: \n" + permutationFinder(s2));
+		//String s1 = "ABC";
+		 	String s2 = "ABCD";
+		 //System.out.println("\nPermutations for " + s + " are: \n" + permutationFinder(s));
+		//System.out.println("\nPermutations for " + s1 + " are: \n" + permutationFinder(s1));
+		System.out.println("\nPermutations for " + s2 + " are: \n" + permutationFinder(s2));
 
 
 	}
