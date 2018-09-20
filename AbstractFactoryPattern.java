@@ -78,17 +78,13 @@ public class AbstractFactoryPattern {
 		@Override
 		public Shape getShape(String shapeType){
 
-			if(shapeType == null){
-				return null;
-			}		
-
-			if(shapeType.equalsIgnoreCase("CIRCLE")){
+			if("CIRCLE".equalsIgnoreCase(shapeType)){
 				return new Circle();
 
-			}else if(shapeType.equalsIgnoreCase("RECTANGLE")){
+			}else if("RECTANGLE".equalsIgnoreCase(shapeType)){
 				return new Rectangle();
 
-			}else if(shapeType.equalsIgnoreCase("SQUARE")){
+			}else if("SQUARE".equalsIgnoreCase(shapeType)){
 				return new Square();
 			}
 
@@ -111,17 +107,13 @@ public class AbstractFactoryPattern {
 		@Override
 		Color getColor(String color) {
 
-			if(color == null){
-				return null;
-			}		
-
-			if(color.equalsIgnoreCase("RED")){
+			if("RED".equalsIgnoreCase(color)){
 				return new Red();
 
-			}else if(color.equalsIgnoreCase("GREEN")){
+			}else if("GREEN".equalsIgnoreCase(color)){
 				return new Green();
 
-			}else if(color.equalsIgnoreCase("BLUE")){
+			}else if("BLUE".equalsIgnoreCase(color)){
 				return new Blue();
 			}
 
@@ -132,10 +124,10 @@ public class AbstractFactoryPattern {
 	public class FactoryProducer {
 		public AbstractFactory getFactory(String choice){
 
-			if(choice.equalsIgnoreCase("SHAPE")){
+			if("SHAPE".equalsIgnoreCase(choice)){
 				return new ShapeFactory();
 
-			}else if(choice.equalsIgnoreCase("COLOR")){
+			}else if("COLOR".equalsIgnoreCase(choice)){
 				return new ColorFactory();
 			}
 
