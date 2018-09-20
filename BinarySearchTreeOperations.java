@@ -1,4 +1,14 @@
 
+/**
+Binary Search Tree, is a node-based binary tree data structure which has the following properties:
+The left subtree of a node contains only nodes with keys lesser than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+The left and right subtree each must also be a binary search tree.
+There must be no duplicate nodes.
+Time Complexity: The worst case time complexity of search and insert operations is O(h) where h is height of Binary Search Tree. 
+In worst case, we may have to travel from root to the deepest leaf node. 
+The height of a skewed tree may become n and the time complexity of search and insert operation may become O(n).
+**/
 public class BinarySearchTreeOperations {
 	public static  Node root;
 	public BinarySearchTreeOperations(){
@@ -82,7 +92,7 @@ public class BinarySearchTreeOperations {
 		return true;		
 	}
 	
-	public Node getSuccessor(Node deleleNode){
+	private Node getSuccessor(Node deleleNode){
 		Node successsor =null;
 		Node successsorParent =null;
 		Node current = deleleNode.right;
@@ -126,7 +136,7 @@ public class BinarySearchTreeOperations {
 			}
 		}
 	}
-	public void display(Node root){
+	public void display(Node root){//in order display
 		if(root!=null){
 			display(root.left);
 			System.out.print(" " + root.data);
